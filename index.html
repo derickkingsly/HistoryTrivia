@@ -11,6 +11,8 @@
         var currQ = 0;
         var arrPict = [];
         var questionNumber = 0;
+        var isEndGame = false;
+        var isOptionPicked = false;
 
         function fnloadquestion() {
 
@@ -36,10 +38,37 @@
                 j = i + 1;
                 document.getElementById('spOption' + j).innerHTML = arrOpt[i];
             }
-
+            
         }
 
+        function fnrevising(optionNumber) {
+            if (isEndGame == false && isOptionPicked == false) {
 
+
+                if (arrAns[currQ - 1] == optionNumber) {
+                    document.getElementById('divopt' + optionNumber).style.backgroundColor = 'green';
+                    isOptionPicked = true;
+                    document.getElementById('divnext').style.display = 'block';
+                } else {
+                    document.getElementById('divopt' + optionNumber).style.backgroundColor = 'red';
+                    isEndGame = true;
+                    isOptionPicked = true;
+                    setTimeout(function () {
+                        document.getElementById('divgameover').style.display = 'block';
+                        document.getElementById('divtrivia').style.display = 'none';
+                    },1000);
+                }
+            }
+        }
+        function fnRefresh() {
+            fnloadquestion();
+            document.getElementById('divopt1').style.backgroundColor = '';
+            document.getElementById('divopt2').style.backgroundColor = '';
+            document.getElementById('divopt3').style.backgroundColor = '';
+            document.getElementById('divopt4').style.backgroundColor = '';
+            document.getElementById('divnext').style.display = 'none';
+            isOptionPicked = false;
+        }
     </script>
 
 </head>
@@ -47,23 +76,32 @@
     <h2 style ="text-align: center">History Trivia</h2>
     <div style="border:solid 2px blue; height:auto ; width:90%; margin-left: 5%">
         <div>
+            <div id="divtrivia">
             <div style="margin-top:30px;margin-left:30px;margin-bottom:30px">
                 <span id="spQNO">1. </span><span id="spQuestion">What year was the declaration of independence signed</span>
             </div>
-            <div style="border:solid 1px black; margin:20px;padding:20px;">
+            <div id="divopt1" style="border: solid 1px black; margin: 20px; padding: 20px; cursor: pointer;" onclick="fnrevising(1);">
                 <span id="spOption1">1976</span>
             </div>
-            <div style="border:solid 1px black; margin:20px;padding:20px;">
+            <div id="divopt2" style="border: solid 1px black; margin: 20px; padding: 20px; cursor: pointer;" onclick="fnrevising(2);">
                 <span id="spOption2">1967</span>
             </div>
-            <div style="border:solid 1px black; margin:20px;padding:20px;">
+            <div id="divopt3" style="border: solid 1px black; margin: 20px; padding: 20px; cursor: pointer;" onclick="fnrevising(3);">
                 <span id="spOption3">1776</span>
             </div>
-            <div style="border:solid 1px black; margin:20px;padding:20px;">
+            <div id="divopt4" style="border:solid 1px black; margin:20px;padding:20px;cursor:pointer;" onclick="fnrevising(4);">
                 <span id="spOption4">1784</span>
             </div>
 
+                </div>
 
+            <div id="divgameover" style="display: none ;margin-top: 200px;margin-bottom: 200px;margin-left:35%;">
+                <span style="color:red;font-size: 48px;">Game Over!</span>
+            </div>
+                
+            <div id="divnext" style="background-color:green;width: 75px;height: 30px;text-align: center;margin-left: 45%;padding-top: 10px;margin-bottom: 10px;cursor: pointer;display:none" onclick="fnRefresh();">
+                Next
+            </div>
 
         </div>
     </div>
